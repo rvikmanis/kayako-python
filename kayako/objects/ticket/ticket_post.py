@@ -56,10 +56,11 @@ class TicketPost(KayakoObject):
         'ishtml',
         'isemailed',
         'issurveycomment',
+        'isprivate',
     ]
 
     __required_add_parameters__ = ['ticketid', 'subject', 'contents']
-    __add_parameters__ = ['ticketid', 'subject', 'contents', 'userid', 'staffid']
+    __add_parameters__ = ['ticketid', 'subject', 'contents', 'userid', 'staffid', 'isprivate']
 
     controller = '/Tickets/TicketPost'
 
@@ -84,6 +85,7 @@ class TicketPost(KayakoObject):
             ishtml=cls._get_boolean(ticket_post_tree.find('ishtml')),
             isemailed=cls._get_boolean(ticket_post_tree.find('isemailed')),
             issurveycomment=cls._get_boolean(ticket_post_tree.find('issurveycomment')),
+            isprivate=cls._get_boolean(ticket_post_tree.find('isprivate')),
         )
         return params
 
