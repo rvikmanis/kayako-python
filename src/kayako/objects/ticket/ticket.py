@@ -177,7 +177,7 @@ class Ticket(KayakoObject):
                 setattr(self, date_node, self._get_date(node, required=False))
 
     @classmethod
-    def get_all(cls, api, departmentid, ticketstatusid= -1, ownerstaffid= -1, userid= -1):
+    def get_all(cls, api, departmentid, ticketstatusid= -1, ownerstaffid= -1, userid= -1, count= 1000, start= 0):
         '''
         Get all of the tickets filtered by the parameters:
         Lists are converted to comma-separated values.
@@ -198,7 +198,7 @@ class Ticket(KayakoObject):
         if isinstance(userid, (list, tuple)):
             userid = ','.join([str(id_item) for id_item in userid])
 
-        response = api._request('%s/ListAll/%s/%s/%s/%s/' % (cls.controller, departmentid, ticketstatusid, ownerstaffid, userid), 'GET')
+        response = api._request('%s/ListAll/%s/%s/%s/%s/%s/%s' % (cls.controller, departmentid, ticketstatusid, ownerstaffid, userid, count, start), 'GET')
         tree = etree.parse(response)
         return [Ticket(api, **cls._parse_ticket(api, ticket_tree)) for ticket_tree in tree.findall('ticket')]
 
