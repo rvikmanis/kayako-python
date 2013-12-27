@@ -75,6 +75,7 @@ class Ticket(KayakoObject):
         'creationmode',
         'creationtype',
         'isescalated',
+        'ignoreautoresponder',
         'escalationruleid',
         'tags',
         'watchers',
@@ -85,7 +86,7 @@ class Ticket(KayakoObject):
     ]
 
     __required_add_parameters__ = ['subject', 'fullname', 'email', 'contents', 'departmentid', 'ticketstatusid', 'ticketpriorityid', 'tickettypeid', ]
-    __add_parameters__ = ['subject', 'fullname', 'email', 'contents', 'departmentid', 'ticketstatusid', 'ticketpriorityid', 'tickettypeid', 'userid', 'staffid', 'ownerstaffid', 'type']
+    __add_parameters__ = ['subject', 'fullname', 'email', 'contents', 'departmentid', 'ticketstatusid', 'ticketpriorityid', 'tickettypeid', 'userid', 'ignoreautoresponder', 'staffid', 'ownerstaffid', 'type']
 
     __save_parameters__ = ['subject', 'fullname', 'email', 'departmentid', 'ticketstatusid', 'ticketpriorityid', 'ownerstaffid', 'userid', ]
 
