@@ -26,6 +26,7 @@ from lxml import etree
 from kayako.exception import KayakoRequestError, KayakoResponseError, KayakoInitializationError
 from kayako.core.lib import FOREVER
 from kayako.objects.ticket import Ticket
+from kayako.objects.knowledgebase import Category
 
 log = logging.getLogger('kayako')
 

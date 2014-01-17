@@ -8,3 +8,4 @@ from department import *
 from staff import *
 from ticket import *
 from user import *
+from knowledgebase import *
