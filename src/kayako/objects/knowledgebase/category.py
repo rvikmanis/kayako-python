@@ -37,7 +37,7 @@ class Category(KayakoObject):
 
     controller = '/Knowledgebase/Category'
 
-    __parameters__ = ['id', 'title', 'categorytype', 'parentkbcategoryid', 'displayorder', 'articlesortorder', 'allowcomments', 'allowrating', 'ispublished', 'uservisibilitycustom', 'usergroupidlist', 'staffvisibilitycustom', 'staffgroupidlist', 'staffid']
+    __parameters__ = ['id', 'title', 'categorytype', 'parentkbcategoryid', 'displayorder','totalarticles', 'articlesortorder', 'allowcomments', 'allowrating', 'ispublished', 'uservisibilitycustom', 'usergroupidlist', 'staffvisibilitycustom', 'staffgroupidlist', 'staffid']
 
     __required_add_parameters__ = ['title', 'categorytype']
     __add_parameters__ = ['id', 'title', 'categorytype', 'parentkbcategoryid', 'displayorder', 'articlesortorder', 'allowcomments', 'allowrating', 'ispublished', 'uservisibilitycustom', 'usergroupidlist', 'staffvisibilitycustom', 'staffgroupidlist', 'staffid']
@@ -47,16 +47,16 @@ class Category(KayakoObject):
 
 
     @classmethod
-    def _parse_category(cls, category_tree):
+    def _parse_category(cls, api, category_tree):
         usergroups = []
-        usergroups_node = category.find('usergroupidlist')
+        usergroups_node = category_tree.find('usergroupidlist')
         if usergroups_node is not None:
             for id_node in usergroups_node.findall('usergroupid'):
                 id = cls._get_int(id_node)
                 usergroups.append(id)
 				
 		staffgroups = []
-        staffgroups_node = category.find('staffgroupidlist')
+        staffgroups_node = category_tree.find('staffgroupidlist')
         if staffgroups_node is not None:
             for id_node in staffgroups_node.findall('staffgroupid'):
                 id = cls._get_int(id_node)
@@ -64,19 +64,19 @@ class Category(KayakoObject):
 
         params = dict(
             id=cls._get_int(category_tree.find('id')),
+			parentkbcategoryid=cls._get_int(category_tree.find('parentkbcategoryid')),
+			staffid=cls._get_int(category_tree.find('staffid')),
             title=cls._get_string(category_tree.find('title')),
-            categorytype=cls._get_int(category_tree.find('categorytype')),
-            parentkbcategoryid=cls._get_int(category_tree.find('parentkbcategoryid'), required=False),
-            displayorder=cls._get_int(category_tree.find('displayorder')),
-            articlesortorder=cls._get_int(category_tree.find('articlesortorder')),
+			totalarticles=cls._get_int(category_tree.find('totalarticles')),
+			categorytype=cls._get_int(category_tree.find('categorytype')), 
+			displayorder=cls._get_int(category_tree.find('displayorder')),
 			allowcomments=cls._get_boolean(category_tree.find('allowcomments')),
+			uservisibilitycustom=cls._get_boolean(category_tree.find('uservisibilitycustom')),
+			usergroupidlist=usergroups,
+			staffvisibilitycustom=cls._get_boolean(category_tree.find('staffvisibilitycustom')),
+			staffgroupidlist=staffgroups,
 			allowrating=cls._get_boolean(category_tree.find('allowrating')),
 			ispublished=cls._get_boolean(category_tree.find('ispublished')),
-			uservisibilitycustom=cls._get_int(category_tree.find('uservisibilitycustom')),
-			usergroupidlist=usergroups,
-			staffvisibilitycustom=cls._get_string(category_tree.find('staffvisibilitycustom')),
-			staffgroupidlist=staffgroups,
-			staffid=cls._get_int(category_tree.find('staffid')),
         )
         return params
 
@@ -106,10 +106,9 @@ class Category(KayakoObject):
 
     @classmethod
     def get_all(cls, api, count=100, start=0):
-
-        response = api._request('%s/ListAll/%s/%s' % (cls.controller, count, start), 'GET')
+        response = api._request('%s/ListAll/%s/%s/' % (cls.controller, count, start), 'GET')
         tree = etree.parse(response)
-        return [Category(api, **cls._parse_category(api, category_tree)) for category_tree in tree.findall('kbcategories')]
+        return [Category(api, **cls._parse_category(api, category_tree)) for category_tree in tree.findall('kbcategory')]
 
     @classmethod
     def get(cls, api, id):
