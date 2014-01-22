@@ -75,6 +75,7 @@ class Ticket(KayakoObject):
         'creationmode',
         'creationtype',
         'isescalated',
+        'templategroupname',
         'escalationruleid',
         'tags',
         'watchers',
@@ -138,6 +139,7 @@ class Ticket(KayakoObject):
             isescalated=cls._get_boolean(ticket_tree.find('isescalated')),
             escalationruleid=cls._get_int(ticket_tree.find('escalationruleid')),
             tags=cls._get_string(ticket_tree.find('tags')),
+            templategroupname=cls._get_string(ticket_tree.find('templategroupname')),
             watchers=watchers,
             workflows=workflows,
             notes=notes,
@@ -278,4 +280,4 @@ class Ticket(KayakoObject):
         self._delete('%s/%s/' % (self.controller, self.id))
 
     def __str__(self):
-        return '<Ticket (%s): %s - %s>' % (self.id, 'UNSUBMITTED' if not self.displayid else self.displayid, self.subject)
+        return '<Ticket (%s): %s - %s><Template: %s>' % (self.id, 'UNSUBMITTED' if not self.displayid else self.displayid, self.subject, self.templategroupname) 
