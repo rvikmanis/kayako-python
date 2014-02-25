@@ -26,26 +26,27 @@ from lxml import etree
 from kayako.exception import KayakoRequestError, KayakoResponseError, KayakoInitializationError
 from kayako.core.lib import FOREVER
 from kayako.objects.ticket import Ticket
+from kayako.objects.user import User
 
 log = logging.getLogger('kayako')
 
 class KayakoAPI(object):
-    ''' 
+    '''
     Python API wrapper for Kayako 4.01.240
     --------------------------------------
-        
+
     **Usage:**
-    
+
     Set up the API::
-    
-        >>> from kayako import KayakoAPI, 
+
+        >>> from kayako import KayakoAPI,
         >>> API_URL = 'http://example.com/api/index.php'
         >>> API_KEY = 'abc3r4f-alskcv3-kvj4'
         >>> SECRET_KEY = 'vkl239vLKMNvlik42fv9IsflkFJlkckfjs'
         >>> api = KayakoAPI(API_URL, API_KEY, SECRET_KEY)
-    
+
     Add a department::
-        
+
         >>> from kayako import Department
         >>>
         >>> # The following is equivalent to: department = api.create(Department, title='Customer Support Department', type='public', module='tickets'); department.add()
@@ -604,6 +605,11 @@ class KayakoAPI(object):
         response = self._request('/Tickets/TicketSearch', 'POST', query=query, ticketid=ticketid, contents=contents, author=author, email=email, creatoremail=creatoremail, fullname=fullname, notes=notes, usergroup=usergroup, userorganization=userorganization, user=user, tags=tags)
         ticket_xml = etree.parse(response)
         return [Ticket(self, **Ticket._parse_ticket(self, ticket_tree)) for ticket_tree in ticket_xml.findall('ticket')]
+
+    def user_search(self, query):
+	    response = self._request('/Base/UserSearch', 'POST', query=query)
+	    user_xml = etree.parse(response)
+	    return [User(self, **User._parse_user(user_tree)) for user_tree in user_xml.findall('user')]
 
     def ticket_search_full(self, query):
         ''' Shorthand for ticket_search(query, ticketid=True, contents=True, author=True, email=True, creatoremail=True, fullname=True, notes=True, usergroup=True, userorganization=True, user=True, tags=True) '''
