@@ -21,8 +21,8 @@ class CustomField(KayakoObject):
 	'''
     Kayako Custom Field API Object.
 
-	customfieldid         The custom field ID.
-	customfieldgroupid    The custom field group id.
+    customfieldid         The custom field ID.
+    customfieldgroupid    The custom field group id.
     title                 The title of the custom field.
     fieldtype             The type of the custom field.
     fieldname             The field name of custom field.
