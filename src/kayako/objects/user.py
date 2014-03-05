@@ -89,10 +89,10 @@ class User(KayakoObject):
             userrole=cls._get_string(user_tree.find('userrole')),
             timezone=cls._get_string(user_tree.find('timezone')),
             enabledst=cls._get_boolean(user_tree.find('enabledst')),
-            slaplanid=cls._get_int(user_tree.find('slaplanid')),
-            slaplanexpiry=cls._get_date(user_tree.find('slaplanexpiry')),
+            slaplanid=cls._get_int(user_tree.find('slaplanid'), required=False),
+            slaplanexpiry=cls._get_date(user_tree.find('slaplanexpiry'), required=False),
             userexpiry=cls._get_date(user_tree.find('userexpiry')),
-            dateline=cls._get_date(user_tree.find('dateline')),
+            dateline=cls._get_date(user_tree.find('dateline'), required=False),
             lastvisit=cls._get_date(user_tree.find('lastvisit')),
         )
         return params
