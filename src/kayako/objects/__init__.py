@@ -9,3 +9,4 @@ from staff import *
 from ticket import *
 from user import *
 from knowledgebase import *
+from custom_field import *
