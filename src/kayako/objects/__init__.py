@@ -10,3 +10,4 @@ from ticket import *
 from user import *
 from knowledgebase import *
 from custom_field import *
+from news import *
