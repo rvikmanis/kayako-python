@@ -11,3 +11,4 @@ from user import *
 from knowledgebase import *
 from custom_field import *
 from news import *
+from troubleshooter import *
