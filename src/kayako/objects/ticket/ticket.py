@@ -116,7 +116,7 @@ class Ticket(KayakoObject):
 			fullname=cls._get_string(ticket_tree.find('fullname')),
 			email=cls._get_string(ticket_tree.find('email')),
 			departmentid=cls._get_int(ticket_tree.find('departmentid')),
-			autouserid=cls._get_boolean(ticket_tree.find('autouserid')),
+			autouserid=cls._get_boolean(ticket_tree.find('autouserid'), required=False),
 			ticketstatusid=cls._get_int(ticket_tree.find('ticketstatusid'), required=False),
 			ticketpriorityid=cls._get_int(ticket_tree.find('priorityid')),  # Note the difference, request param is ticketpriorityid, response is priorityid
 			tickettypeid=cls._get_int(ticket_tree.find('tickettypeid'), required=False),
