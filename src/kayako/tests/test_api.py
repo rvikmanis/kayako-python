@@ -121,31 +121,31 @@ class TestKayakoAPI(KayakoAPITest):
         assert url_encoded_signature == 'VKjt8M54liY6xq1UuhUYH5BFp1RUqHekqytgLPrVEA0%3D'
 
     def test_get(self):
-        r = self.api._request('/Core/Test', 'GET')
+        r = self.api._request('/Core/TestAPI', 'GET')
         assert r.read()
         assert r.getcode() == 200, r.getcode()
-        r = self.api._request('/Core/Test', 'GET', test='just a test')
+        r = self.api._request('/Core/TestAPI', 'GET', test='just a test')
         assert r.read()
         assert r.getcode() == 200, r.getcode()
-        r = self.api._request('/Core/Test/1', 'GET')
+        r = self.api._request('/Core/TestAPI/1', 'GET')
         assert r.read()
         assert r.getcode() == 200, r.getcode()
-        r = self.api._request('/Core/Test/1', 'GET', test='just a test')
+        r = self.api._request('/Core/TestAPI/1', 'GET', test='just a test')
         assert r.read()
         assert r.getcode() == 200, r.getcode()
 
     def test_post(self):
-        r = self.api._request('/Core/Test', 'POST')
+        r = self.api._request('/Core/TestAPI', 'POST')
         assert r.read()
         assert r.getcode() == 200, r.getcode()
 
     def test_put(self):
-        r = self.api._request('/Core/Test/1', 'PUT', x=234)
+        r = self.api._request('/Core/TestAPI/1', 'PUT', x=234)
         assert r.read()
         assert r.getcode() == 200, r.getcode()
 
     def test_delete(self):
-        r = self.api._request('/Core/Test/1', 'DELETE')
+        r = self.api._request('/Core/TestAPI/1', 'DELETE')
         assert r.read()
         assert r.getcode() == 200, r.getcode()
 
